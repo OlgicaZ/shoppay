@@ -3,6 +3,7 @@ import { MdOutlineSecurity } from "react-icons/md";
 import { BsSuitHeart } from "react-icons/bs";
 import { RiAccountPinCircleLine } from "react-icons/ri";
 import { RiArrowDropDownFill } from "react-icons/ri";
+import Link from 'next/link';
 
 export default function Top() {
     return (
@@ -30,7 +31,9 @@ export default function Top() {
                     </li>
                     <li className={styles.top__list_item}>
                         <BsSuitHeart />
-                        <span>Wishlist</span>
+                        <Link href='/profile/wishlist'>
+                            <span>Wishlist</span>
+                        </Link>
                     </li>
                     <li className={styles.top__list_item}>
                         <div className={styles.flex}>

@@ -40,6 +40,7 @@
     }
 
     &__list_item {
+        cursor: pointer;
         position: relative;
         display: flex;
         align-items: center;
@@ -82,6 +83,12 @@
         &:last-of-type {
             &::after {
                 display: none;
+            }
+        }
+
+        &:hover {
+            span {
+                color: #222;
             }
         }
     }
