@@ -4,8 +4,11 @@ import { BsSuitHeart } from "react-icons/bs";
 import { RiAccountPinCircleLine } from "react-icons/ri";
 import { RiArrowDropDownFill } from "react-icons/ri";
 import Link from 'next/link';
+import { useState } from 'react';
+import UserMenu from './UserMenu';
 
 export default function Top() {
+    const [loggedIn, setLoggedIn] = useState(false);
     return (
         <div className={styles.top}>
             <div className={styles.top__container}>
@@ -13,7 +16,6 @@ export default function Top() {
                 <ul className={styles.top__list}>
                     <li className={styles.top__list_item}>
                         <img
-                            className={styles.top__country_img}
                             src='https://upload.wikimedia.org/wikipedia/commons/7/79/Flag_of_North_Macedonia.svg'
                             alt='yellow sun on a red background'
                         />
@@ -36,11 +38,29 @@ export default function Top() {
                         </Link>
                     </li>
                     <li className={styles.top__list_item}>
-                        <div className={styles.flex}>
-                            <RiAccountPinCircleLine />
-                            <span>Account</span>
-                            <RiArrowDropDownFill />
-                        </div>
+                        {
+                            loggedIn ? (
+                                <li className={styles.top__list_item}>
+                                    <div className={styles.flex}>
+                                        <img
+                                            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzBpnouxDuF063trW5gZOyXtyuQaExCQVMYA&usqp=CAU'
+                                            alt='user image'
+                                        />
+                                        <span>OLGICA</span>
+                                        <RiArrowDropDownFill />
+                                    </div>
+                                </li>
+                            ) : (
+                                <li className={styles.top__list_item}>
+                                    <div className={styles.flex}>
+                                        <RiAccountPinCircleLine />
+                                        <span>Account</span>
+                                        <RiArrowDropDownFill />
+                                    </div>
+                                </li>
+                            )
+                        }
+                        <UserMenu loggedIn={ loggedIn } />
                     </li>
                 </ul>
             </div>

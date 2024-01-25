@@ -1,5 +1,6 @@
 .header {
     height: 100%;
+    width: 100vw;
     box-shadow: $shadow-1;
 }
 
@@ -16,6 +17,14 @@
     background: #f8f8f8;
     border-top: .0625rem solid #eee;
     border-bottom: .0625rem solid #eee;
+    position: relative;
+
+    img {
+        width: 1.75rem;
+        height: 1.75rem;
+        object-fit: cover;
+        border-radius: 50%;
+    }
 
     &__container {
         max-width: 95%;
@@ -30,13 +39,6 @@
         width: 50%;
         display: flex;
         gap: .9375rem;
-    }
-
-    &__country_img {
-        width: 1.75rem;
-        height: 1.75rem;
-        object-fit: cover;
-        border-radius: 50%;
     }
 
     &__list_item {
@@ -90,6 +92,51 @@
             span {
                 color: #222;
             }
+
+            svg {
+                fill: #666;
+            }
         }
+
+        @media (max-width: 41.875rem) {
+            &:nth-of-type(2) {
+                display: none;
+            }
+
+            &:nth-of-type(3) {
+                display: none;
+            }
+
+            &:nth-of-type(4) {
+                display: none;
+            }
+        }
+    }
+}
+
+.menu {
+    width: 17.5rem;
+    box-shadow: $shadow-1;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 1rem 0;
+
+    h4 {
+        text-align: center;
+    }
+
+    .flex {
+        display: flex !important;
+        gap: .625rem !important;
+        width: 100% !important;
+        padding: 0 1rem !important;
     }
 }
