@@ -7,7 +7,7 @@ export default function UserMenu({ loggedIn }) {
             <h4>Welcome to Shoppay!</h4>
             {
                 loggedIn ? (
-                    <div>
+                    <div className={styles.flex}>
                         <img
                             className={styles.menu__img}
                             src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzBpnouxDuF063trW5gZOyXtyuQaExCQVMYA&usqp=CAU'

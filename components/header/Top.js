@@ -8,7 +8,8 @@ import { useState } from 'react';
 import UserMenu from './UserMenu';
 
 export default function Top() {
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(true);
+    const [visible, setVisible] = useState(false);
     return (
         <div className={styles.top}>
             <div className={styles.top__container}>
@@ -37,7 +38,11 @@ export default function Top() {
                             <span>Wishlist</span>
                         </Link>
                     </li>
-                    <li className={styles.top__list_item}>
+                    <li 
+                        className={styles.top__list_item}
+                        onMouseOver={() => setVisible(true)}
+                        onMouseLeave={() => setVisible(false)}
+                    >
                         {
                             loggedIn ? (
                                 <li className={styles.top__list_item}>
@@ -60,7 +65,9 @@ export default function Top() {
                                 </li>
                             )
                         }
-                        <UserMenu loggedIn={ loggedIn } />
+                        {
+                            visible && <UserMenu loggedIn={loggedIn} />
+                        }
                     </li>
                 </ul>
             </div>

@@ -124,8 +124,6 @@
     z-index: 99;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
     gap: 1rem;
     padding: 1rem 0;
 
@@ -138,5 +136,37 @@
         gap: .625rem !important;
         width: 100% !important;
         padding: 0 1rem !important;
+    }
+
+    ul {
+        li {
+            height: 1.875rem;
+
+            a {
+                width: 100%;
+                padding-left: 1rem;
+            }
+    
+            &:hover {
+                background: #eeeeeebe;
+            }
+        }
+    }
+
+    &__img {
+        width: 6.25rem !important;
+        height: 6.25rem !important;
+    }
+
+    .col {
+        display: flex;
+        flex-direction: column;
+        span {
+            &:last-of-type {
+                font-size: .875rem;
+                color: $blue-color;
+                text-decoration: underline;
+            }
+        }
     }
 }
