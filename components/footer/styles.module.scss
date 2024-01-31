@@ -5,13 +5,32 @@
         position: relative;
         width: 100%;
         display: grid;
+        grid-template-areas:
+            "links"
+            "socials"
+            "newsletter"
+            "payments"
+            "copyright";
         gap: 3rem;
         padding: 1rem;
+
+        @media (min-width: 800px) {
+            grid-template-areas: 
+            "links socials"
+            "links newsletter"
+            "copyright payment";
+        }
+
+        @media (min-width: 1200px) {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
     }
 
     img {
         width: 8.75rem;
         height: 2.5rem;
+        object-fit: contain;
     }
 
     h3 {
@@ -21,6 +40,7 @@
     }
 
     &__links {
+        grid-area: links;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
@@ -48,6 +68,8 @@
     }
 
     &__socials {
+        grid-area: socials;
+        
         section {
             ul {
                 margin-top: .625rem;
@@ -73,7 +95,8 @@
     }
 
     &__newsletter {
-        
+        grid-area: newsletter;
+
         input {
             flex: 1;
             height: 40px;
@@ -101,7 +124,7 @@
     }
 
     &__payment {
-
+        grid-area: payment;
     }
 
     &__flexwrap {
@@ -118,7 +141,8 @@
     }
 
     &__copyright {
-        
+        grid-area: copyright;
+
         section {
             font-size: .75rem;
             color: #666;
@@ -134,7 +158,7 @@
             li {
                 position: relative;
                 text-decoration: underline;
-                
+
                 &::after {
                     content: "";
                     width: .0625rem;
