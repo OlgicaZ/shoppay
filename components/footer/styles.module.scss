@@ -14,6 +14,12 @@
         height: 2.5rem;
     }
 
+    h3 {
+        font-size: .75rem;
+        font-weight: 700;
+        color: #222;
+    }
+
     &__links {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -21,6 +27,10 @@
 
         ul {
             padding: .3125rem;
+
+            b {
+                text-transform: uppercase;
+            }
 
             li {
                 font-size: .75rem;
@@ -31,6 +41,26 @@
 
                     &:hover {
                         text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+
+    &__socials {
+        section {
+            ul {
+                margin-top: .625rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                li {
+                    font-size: 2rem;
+                    color: #666;
+
+                    &:hover {
+                        color: $blue-color;
                     }
                 }
             }
