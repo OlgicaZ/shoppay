@@ -99,4 +99,21 @@
             }
         }
     }
+
+    &__payment {
+
+    }
+
+    &__flexwrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .625rem;
+        margin-top: 1rem;
+
+        img {
+            width: 3.75rem;
+            height: 2.1875rem;
+            object-fit: cover;
+        }
+    }
 }
