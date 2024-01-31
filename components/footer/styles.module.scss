@@ -66,4 +66,37 @@
             }
         }
     }
+
+    &__flex {
+        display: flex;
+        margin-top: .625rem;
+    }
+
+    &__newsletter {
+        
+        input {
+            flex: 1;
+            height: 40px;
+            outline: none;
+            border: .0625rem solid #999;
+            font-style: .875rem;
+            padding-left: .625rem;
+        }
+
+        button {
+            width: 9.375rem;
+            margin-left: .3125rem;
+        }
+
+        p {
+            margin-top: .625rem;
+            font-style: .75rem;
+            color: #666;
+
+            a {
+                color: $blue-color;
+                text-decoration: underline;
+            }
+        }
+    }
 }
