@@ -116,4 +116,38 @@
             object-fit: cover;
         }
     }
+
+    &__copyright {
+        
+        section {
+            font-size: .75rem;
+            color: #666;
+            padding-bottom: .625rem;
+        }
+
+        ul {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            column-gap: 2rem;
+
+            li {
+                position: relative;
+                text-decoration: underline;
+                
+                &::after {
+                    content: "";
+                    width: .0625rem;
+                    height: .9375rem;
+                    background: #666;
+                    position: absolute;
+                    right: -1rem;
+                }
+
+                &:last-of-type::after {
+                    display: none;
+                }
+            }
+        }
+    }
 }
