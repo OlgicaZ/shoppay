@@ -1,28 +1,34 @@
 import Link from 'next/link';
 import styles from './styles.module.scss';
+import { signOut, signIn } from 'next-auth/react'
 
-export default function UserMenu({ loggedIn }) {
+export default function UserMenu({ session }) {
     return (
         <div className={styles.menu}>
             <h4>Welcome to Shoppay!</h4>
             {
-                loggedIn ? (
+                session ? (
                     <div className={styles.flex}>
                         <img
                             className={styles.menu__img}
-                            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzBpnouxDuF063trW5gZOyXtyuQaExCQVMYA&usqp=CAU'
+                            src={session.user.image}
                             alt='user image'
                         />
                         <div className={styles.col}> 
                             <span>Welcome back,</span>
-                            <h3>OLGICA</h3>
-                            <span>Sign Out</span>
+                            <h3>{session.user.name}</h3>
+                            <span onClick={() => signOut()}>Sign Out</span>
                         </div>
                     </div>
                 ) : (
                     <div className={styles.flex}>
                         <button className={styles.btn_primary}>Register</button>
-                        <button className={styles.btn_outlined}>Login</button>
+                        <button 
+                            className={styles.btn_outlined}
+                            onClick={() => signIn()}
+                        >
+                            Login
+                        </button>
                     </div>
                 )
             }
