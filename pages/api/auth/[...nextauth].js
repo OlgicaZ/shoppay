@@ -3,7 +3,11 @@ import GithubProvider from "next-auth/providers/github"
 import FacebookProvider from "next-auth/providers/facebook"
 import GoogleProvider from "next-auth/providers/google"
 
+import { MongoDBAdapter } from "@auth/mongodb-adapter"
+import clientPromise from "../auth/lib/mongodb"
+
 export const authOptions = {
+    adapter: MongoDBAdapter(clientPromise),
     // Configure one or more authentication providers
     providers: [
         GithubProvider({
@@ -18,7 +22,13 @@ export const authOptions = {
             clientId: process.env.GOOGLE_ID,
             clientSecret: process.env.GOOGLE_SECRET,
         }),
-        // ...add more providers here
     ],
+    pages: {
+        signIn: "/signin",
+    },
+    session: {
+        strategy: "jwt",
+    },
+    secret: process.env.JWT_SECRET,
 }
 export default NextAuth(authOptions)
