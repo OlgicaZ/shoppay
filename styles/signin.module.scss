@@ -16,8 +16,8 @@
     &__header {
         display: flex;
         align-items: center;
-        justify-content: center;
-        max-width: 23.125rem;
+        justify-content: space-between;
+        max-width: 18.75rem;
 
         .back__svg {
             width: 3.125rem;
@@ -53,6 +53,36 @@
                 cursor: pointer;
                 border-bottom: .0625rem solid $blue-color;
                 padding-bottom: .3125rem;
+            }
+        }
+    }
+
+    &__form {
+        margin-top: 1rem;
+
+        h1 {
+            font-size: 3.125rem;
+            margin: 0;
+        }
+
+        p {
+            color: #96979b;
+        }
+
+        form {
+            margin-top: 2rem;
+        }
+
+        .forgot {
+            color: #666;
+            padding: 1rem;
+            font-size: .875rem;
+            width: fit-content;
+            height: 2.5rem;
+            
+            &:hover {
+                color: $blue-color;
+                border-bottom: .0625rem solid $blue-color;
             }
         }
     }

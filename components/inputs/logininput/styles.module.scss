@@ -1,0 +1,77 @@
+.input {
+    position: relative;
+    max-width: 23.75rem;
+    width: 100%;
+    background-color: #f0f0f0;
+    margin: .625rem 0;
+    height: 3.4375rem;
+    border-radius: 3.4375rem;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    align-items: center;
+    padding: 0 1rem;
+    margin-bottom: rem;
+
+    svg {
+        width: 1.5625rem;
+        height: 1.5625rem;
+        stroke: #6666669a;
+        fill: #6666669a;
+    }
+
+    input {
+        background: none;
+        outline: none;
+        border: none;
+        line-height: 1;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #333;
+
+        &::placeholder {
+            color: #aaa;
+        }
+    }
+}
+
+.error {
+    background: $light-error-color !important;
+    margin-top: 5rem;
+
+    input {
+        color: #fff !important;
+
+        &::placeholder {
+            color: #fff !important;
+        }
+    }
+
+    svg {
+        fill: #fff !important;
+        stroke: #fff !important;
+    }
+
+    &__popup {
+        position: absolute;
+        top: -4.375rem;
+        background: $error-color;
+        height: 3.75rem;
+        width: 100%;
+        border-radius: 1.25rem;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-weight: 700;
+        font-size: .875rem;
+        padding: .625rem;
+
+        span {
+            position: absolute;
+            bottom: -0.625rem;
+            left: 1rem;
+            border-top: .625rem solid $error-color;
+            border-right: .625rem solid transparent;
+            border-left: .625rem solid transparent;
+        }
+    }
+}
