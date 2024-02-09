@@ -8,20 +8,21 @@ import * as Yup from 'yup';
 import LoginInput from '@/components/inputs/logininput';
 import { useState } from 'react';
 import CircledIconButton from '@/components/inputs/buttons/circledIconBtn';
+import { getProviders, signIn } from "next-auth/react";
 
 const initialValues = {
     login_email: "",
     login_password: "",
 }
 
-export default function signin() {
+export default function signin({ providers }) {
 
     const [user, setUser] = useState(initialValues);
     const { login_email, login_password } = user;
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
-        setUser({...user,[name]: value})
+        const { name, value } = e.target;
+        setUser({ ...user, [name]: value })
     }
 
     const loginValidation = Yup.object({
@@ -49,40 +50,69 @@ export default function signin() {
                         <p>
                             Get access to one of the best e-shopping services in the world
                         </p>
-                        <Formik 
-                            enableReinitialize 
-                            initialValues={{login_email, login_password}}
+                        <Formik
+                            enableReinitialize
+                            initialValues={{ login_email, login_password }}
                             validationSchema={loginValidation}
                         >
                             {
                                 (form) => (
                                     <Form>
-                                        <LoginInput 
+                                        <LoginInput
                                             type='text'
                                             name='login_email'
-                                            icon='email' 
-                                            placeholder='Email Address' 
+                                            icon='email'
+                                            placeholder='Email Address'
                                             onChange={handleChange}
                                         />
-                                        <LoginInput 
+                                        <LoginInput
                                             type='password'
                                             name='login_password'
-                                            icon='password' 
-                                            placeholder='Password' 
+                                            icon='password'
+                                            placeholder='Password'
                                             onChange={handleChange}
                                         />
-                                        <CircledIconButton type='submit' text='Sign In'/>
+                                        <CircledIconButton type='submit' text='Sign In' />
                                         <div className={styles.forgot}>
                                             <Link href='/forget'>Forgot password?</Link>
                                         </div>
-                                    </Form>  
+                                    </Form>
                                 )
                             }
                         </Formik>
+                        <div className={styles.login__socials}>
+                            <span className={styles.or}>Or continue with</span>
+                            <div className={styles.login__socials_wrap}>
+                                {
+                                    providers.map((provider) => (
+                                        <div key={provider.name}>
+                                            <button
+                                                className={styles.social__btn}
+                                                onClick={() => signIn(provider.id)}
+                                            >
+                                                <img 
+                                                    src={`../../icons/${provider.name}.png`}
+                                                    alt={`${provider.name} logo`}
+                                                />
+                                                Sign in with {provider.name}
+                                            </button>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
             <Footer country={{}} />
         </>
     )
+}
+
+export async function getServerSideProps(context) {
+    const providers = Object.values(await getProviders());
+    return {
+        props: { providers },
+    };
 }
