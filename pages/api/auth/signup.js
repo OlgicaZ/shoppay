@@ -2,6 +2,8 @@ import { createRouter } from "next-connect";
 import db from './../../../utils/db';
 import { validateEmail } from "@/utils/validation";
 import User from "@/models/User";
+import bcrypt from 'bcrypt';
+import { createActivationToken } from "@/utils/tokens";
 
 const router = createRouter()
 
@@ -27,6 +29,16 @@ router.post(async (req, res) => {
         if (password.length < 6) {
             return res.status(400).json({message: 'Password must be at lest 6 characters'});
         }
+
+        const cryptedPassword = await bcrypt.hash(password, 12);
+
+        const newUser = new User({name, email, password: cryptedPassword});
+
+        const addedUser = await newUser.save();
+
+        const activation_token = createActivationToken({id: addedUser._id.toString()})
+
+        console.log(activation_token);
 
     } catch (error) {
         res.status(500).json({message: error.message});
