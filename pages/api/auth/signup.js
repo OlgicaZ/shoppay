@@ -4,6 +4,7 @@ import { validateEmail } from "@/utils/validation";
 import User from "@/models/User";
 import bcrypt from 'bcrypt';
 import { createActivationToken } from "@/utils/tokens";
+import { sendEmail } from "@/utils/sendEmails";
 
 const router = createRouter()
 
@@ -40,7 +41,9 @@ router.post(async (req, res) => {
 
         const url = `${process.env.BASE_URL}/activate/${activation_token}`;
 
-        res.send(url);
+        sendEmail(email, url, '', 'Activate your account.');
+
+        res.send('User created.');
 
     } catch (error) {
         res.status(500).json({message: error.message});
