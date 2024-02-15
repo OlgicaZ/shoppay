@@ -9,20 +9,24 @@ import LoginInput from '@/components/inputs/logininput';
 import { useState } from 'react';
 import CircledIconButton from '@/components/inputs/buttons/circledIconBtn';
 import { getProviders, signIn } from "next-auth/react";
+import axios from 'axios';
 
 const initialValues = {
     login_email: "",
     login_password: "",
-    full_name: "",
+    name: "",
     email: "",
     password: "",
     conf_password: "",
+    success: "",
+    error: ""
 }
 
 export default function signin({ providers }) {
 
     const [user, setUser] = useState(initialValues);
-    const { login_email, login_password, full_name, email, password, conf_password } = user;
+    const [loading, setLoading] = useState(false);
+    const { login_email, login_password, name, email, password, conf_password, success, error } = user;
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -55,6 +59,25 @@ export default function signin({ providers }) {
             .required('Confirm your password')
             .oneOf([Yup.ref('password')], 'Passwords must match')
     })
+
+    const signUpHandler = async () => {
+        try {
+            setLoading(true);
+
+            const { data } = await axios.post("/api/auth/signup", {
+                name,
+                email,
+                password,
+            });
+
+            setUser({ ...user, success: data.message, error: '' });
+            setLoading(false);
+
+        } catch (error) {
+            setLoading(false);
+            setUser({ ...user, success: '', error: error.response.data.message });
+        }
+    }
 
     return (
         <>
@@ -135,9 +158,10 @@ export default function signin({ providers }) {
                         <Formik
                             enableReinitialize
                             initialValues={{
-                                full_name, email, password, conf_password
+                                name, email, password, conf_password
                             }}
                             validationSchema={registerValidation}
+                            onSubmit={() => signUpHandler()}
                         >
                             {
                                 (form) => (
@@ -175,6 +199,8 @@ export default function signin({ providers }) {
                                 )
                             }
                         </Formik>
+                        <div>{success && <span>{success}</span>}</div>
+                        <div>{error && <span>{error}</span>}</div>
                     </div>
                 </div>
             </div>

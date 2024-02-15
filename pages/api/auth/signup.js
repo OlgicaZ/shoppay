@@ -43,7 +43,11 @@ router.post(async (req, res) => {
 
         sendEmail(email, url, '', 'Activate your account.');
 
-        res.send('User created.');
+        await db.disconnectDb();
+
+        res.json({
+            message: 'Register success! Please activate your email to start'
+        });
 
     } catch (error) {
         res.status(500).json({message: error.message});
