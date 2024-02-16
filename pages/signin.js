@@ -10,6 +10,8 @@ import { useState } from 'react';
 import CircledIconButton from '@/components/inputs/buttons/circledIconBtn';
 import { getProviders, signIn } from "next-auth/react";
 import axios from 'axios';
+import DotLoaderSpinner from '@/components/loaders/dotLoader';
+import Router from 'next/router';
 
 const initialValues = {
     login_email: "",
@@ -19,14 +21,15 @@ const initialValues = {
     password: "",
     conf_password: "",
     success: "",
-    error: ""
+    error: "",
+    login_error: ""
 }
 
 export default function signin({ providers }) {
 
     const [user, setUser] = useState(initialValues);
     const [loading, setLoading] = useState(false);
-    const { login_email, login_password, name, email, password, conf_password, success, error } = user;
+    const { login_email, login_password, name, email, password, conf_password, success, error, login_error } = user;
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -73,14 +76,51 @@ export default function signin({ providers }) {
             setUser({ ...user, success: data.message, error: '' });
             setLoading(false);
 
+            setTimeout(async () => {
+                setLoading(true);
+                
+                let options = {
+                    redirect: false,
+                    email,
+                    password
+                };
+
+                const res = await signIn('credentials', options);
+
+                Router.push('/');
+            }, 2000);
+
         } catch (error) {
             setLoading(false);
             setUser({ ...user, success: '', error: error.response.data.message });
         }
     }
 
+    const signInHandler = async () => {
+        setLoading(true);
+        let options = {
+            redirect: false,
+            email: login_email,
+            password: login_password
+        };
+
+        const res = await signIn('credentials', options);
+        setUser({ ...user, success: '', error: '' });
+        setLoading(false);
+
+        if (res?.error) {
+            setLoading(false);
+            setUser({ ...user, login_error: res?.error })
+        } else {
+            return Router.push('/')
+        }
+    }
+
     return (
         <>
+            {
+                loading && <DotLoaderSpinner loading={loading} />
+            }
             <Header country={{}} />
             <div className={styles.login}>
                 <div className={styles.login__container}>
@@ -99,6 +139,7 @@ export default function signin({ providers }) {
                             enableReinitialize
                             initialValues={{ login_email, login_password }}
                             validationSchema={loginValidation}
+                            onSubmit={() => { signInHandler() }}
                         >
                             {
                                 (form) => (
@@ -118,6 +159,9 @@ export default function signin({ providers }) {
                                             onChange={handleChange}
                                         />
                                         <CircledIconButton type='submit' text='Sign In' />
+                                        {
+                                            login_error && <span className={styles.error}>{login_error}</span>
+                                        }
                                         <div className={styles.forgot}>
                                             <Link href='/forget'>Forgot password?</Link>
                                         </div>
@@ -199,8 +243,12 @@ export default function signin({ providers }) {
                                 )
                             }
                         </Formik>
-                        <div>{success && <span>{success}</span>}</div>
-                        <div>{error && <span>{error}</span>}</div>
+                        <div>
+                            {success && <span className={styles.success}>{success}</span>}
+                        </div>
+                        <div>
+                            {error && <span className={styles.error}>{error}</span>}
+                        </div>
                     </div>
                 </div>
             </div>
