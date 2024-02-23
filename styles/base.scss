@@ -37,3 +37,13 @@ $error-color: #ed4337;
     align-items: center;
     gap: .3125rem;
 }
+
+.success {
+    color: $success-color;
+    padding: .625rem;
+}
+
+.error {
+    color: $error-color;
+    padding: .625rem;
+}
