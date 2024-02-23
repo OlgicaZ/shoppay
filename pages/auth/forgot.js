@@ -8,6 +8,8 @@ import LoginInput from '@/components/inputs/logininput';
 import CircledIconButton from '@/components/inputs/buttons/circledIconBtn';
 import { useState } from 'react';
 import * as Yup from 'yup';
+import DotLoaderSpinner from '@/components/loaders/dotLoader';
+import axios from 'axios';
 
 export default function forgot() {
 
@@ -17,7 +19,20 @@ export default function forgot() {
     const [success, setSuccess] = useState('');
 
     const forgotHandler = async () => {
-
+        try {
+            setLoading(true);
+            const { data } = await axios.post('/api/auth/forgot', {
+                email
+            });
+            setError('');
+            setSuccess(data.message);
+            setLoading(false);
+            setEmail("");
+        } catch (error) {
+            setLoading(false);
+            setSuccess('');
+            setError(error.response.data.message);
+        }
     }
 
     const emailValidation = Yup.object({
@@ -28,6 +43,7 @@ export default function forgot() {
 
     return (
         <>
+            {loading && <DotLoaderSpinner loading={loading} />}
             <Header country={{}} />
             <div className={styles.forgot}>
                 <div>
@@ -42,7 +58,9 @@ export default function forgot() {
                             enableReinitialize
                             initialValues={{ email }}
                             validationSchema={emailValidation}
-                            onSubmit={() => { forgotHandler() }}
+                            onSubmit={() => {
+                                forgotHandler();
+                            }}
                         >
                             {
                                 (form) => (
@@ -54,10 +72,15 @@ export default function forgot() {
                                             placeholder='Email Address'
                                             onChange={(e) => setEmail(e.target.value)}
                                         />
-                                        <CircledIconButton type='submit' text='Sign In' />
-                                        {
-                                            error && <span className={styles.error}>{error}</span>
-                                        }
+                                        <CircledIconButton type='submit' text='Send Link' />
+                                        <div style={{ marginTop: '10px' }}>
+                                            {
+                                                error && <span className={styles.error}>{error}</span>
+                                            }
+                                            {
+                                                success && <span className={styles.success}>{success}</span>
+                                            }
+                                        </div>
                                     </Form>
                                 )
                             }
