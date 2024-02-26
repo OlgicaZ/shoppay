@@ -10,26 +10,42 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 import DotLoaderSpinner from '@/components/loaders/dotLoader';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
+import { getSession, signIn } from 'next-auth/react';
+import { Router } from 'next/router';
 
-export default function reset({ token }) {
+export default function reset({ user_id }) {
 
-    console.log('Token ' + token);
+    console.log('user id: ', user_id);
 
     const [password, setPassword] = useState('');
     const [conf_password, setConf_Password] = useState('');
     const [loading, setLoading] = useState('');
     const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
 
     const resetHandler = async () => {
         try {
             setLoading(true);
+            const { data } = await axios.put('/api/auth/reset', {
+                user_id,
+                password
+            });
+
+            let options = {
+                redirect: false,
+                email: data.email,
+                password: password
+            }
+
+            await signIn('credentials', options);
+
             setError('');
             setLoading(false);
+
+            window.location.reload(true);
         } catch (error) {
             setLoading(false);
-            setSuccess('');
-            setError(error.response.data.message);
+            setError('Please try again');
         }
     }
 
@@ -86,9 +102,6 @@ export default function reset({ token }) {
                                             {
                                                 error && <span className={styles.error}>{error}</span>
                                             }
-                                            {
-                                                success && <span className={styles.success}>{success}</span>
-                                            }
                                         </div>
                                     </Form>
                                 )
@@ -103,12 +116,23 @@ export default function reset({ token }) {
 }
 
 export async function getServerSideProps(context) {
-    const { query } = context;
+    const { query, req } = context;
+    const session = await getSession({ req });
+
+    if (session) {
+        return {
+            redirect: {
+                destination: '/',
+            }
+        }
+    }
+
     const token = query.token;
+    const user_id = jwt.verify(token, process.env.RESET_TOKEN_SECRET);
 
     return {
         props: {
-            token,
+            user_id: user_id.id,
         }
     }
 }
