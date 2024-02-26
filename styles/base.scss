@@ -6,6 +6,12 @@ $grey-color: #f8f8f8;
 $success-color: #6cc070;
 $error-color: #ed4337;
 
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
 .btn_primary {
     display: flex;
     align-items: center;

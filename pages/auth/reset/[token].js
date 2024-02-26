@@ -12,7 +12,6 @@ import DotLoaderSpinner from '@/components/loaders/dotLoader';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { getSession, signIn } from 'next-auth/react';
-import { Router } from 'next/router';
 
 export default function reset({ user_id }) {
 
