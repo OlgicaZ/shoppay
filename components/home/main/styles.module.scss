@@ -14,6 +14,49 @@
         background-color: white;
         border-radius: .625rem;
         box-shadow: $shadow-1;
+
+        &__header {
+            width: 100%;
+            height: 2.1875rem;
+            background-color: $grey-color;
+            border-bottom: 1px solid $shadow-1;
+            box-shadow: $shadow-2;
+
+            svg {
+                height: 1.4375rem;
+                width: 1.4375rem;
+            }
+        }
+
+        &__list {
+            margin-top: .1875rem;
+        }
+
+        ul {
+            li {
+                height: 2rem;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $grey-color;
+                }
+
+                a {
+                    padding: 0 1.25rem;
+                    display: flex;
+                    align-items: center;
+                    gap: .625rem;
+                    color: #424141;
+
+                    svg {
+                        fill: #8c8484;
+                        stroke: #8c8484;
+                    }
+                }
+            }
+        }
     }
 
     .header {
