@@ -8,12 +8,57 @@
         "menu offers user"
     ;
 
+    @media (max-width: 1232px) {
+        grid-template-columns: 1fr 3fr;
+    }
+
+    @media (max-width: 990px) {
+        grid-template-columns: 5rem 3fr;
+    }
+
+    @media (max-width: 730px) {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "menu"
+            "swiper"
+            "offers"
+        ;
+
+        .menu {
+            width: 100% !important;
+            height: fit-content !important;
+
+            &__list {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 0.5rem;
+            }
+        }
+    }
+
     .menu {
         grid-area: menu;
         height: 630px;
         background-color: white;
         border-radius: .625rem;
         box-shadow: $shadow-1;
+
+        @media (max-width: 990px) {
+            width: 5rem;
+
+            svg {
+                transform: scale(1.5);
+            }
+
+            &__list {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
 
         &__header {
             width: 100%;
@@ -25,6 +70,16 @@
             svg {
                 height: 1.4375rem;
                 width: 1.4375rem;
+            }
+
+            @media (max-width: 1232px) {
+                display: none !important;
+                height: 0;
+
+                svg,
+                b {
+                    display: none;
+                }
             }
         }
 
@@ -54,6 +109,12 @@
                         fill: #8c8484;
                         stroke: #8c8484;
                     }
+
+                    span {
+                        @media (max-width: 990px) {
+                            display: none;
+                        }
+                    }
                 }
             }
         }
@@ -64,6 +125,10 @@
         height: 40px;
         display: flex;
         align-items: center;
+
+        @media (max-width: 730px) {
+            display: none;
+        }
 
         ul {
             display: flex;
@@ -106,6 +171,10 @@
         background-color: white;
         border-radius: .625rem;
         box-shadow: $shadow-1;
+
+        @media (max-width: 1232px) {
+            display: none;
+        }
 
         &__container {
             padding: 1rem;
