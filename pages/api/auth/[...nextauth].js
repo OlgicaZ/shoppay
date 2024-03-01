@@ -38,7 +38,6 @@ export const authOptions = {
                 } else {
                     throw new Error('This email does not exist.');
                 }
-
             }
         }),
         GithubProvider({

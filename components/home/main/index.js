@@ -2,15 +2,17 @@ import Menu from './menu';
 import Offers from './offers';
 import styles from './styles.module.scss';
 import MainSwiper from './swiper';
+import User from './user';
+import Header from './header';
 
 export default function Main() {
     return (
         <div className={styles.main}>
-            <div className={styles.header}>header</div>
+            <Header />
             <Menu />
             <MainSwiper />
             <Offers />
-            <div className={styles.user}>user</div>
+            <User />
         </div>
     )
 }
